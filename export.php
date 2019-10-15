@@ -1,0 +1,2 @@
+<button class="btn btn-primary" onclick="history.go(-1);">Back </button>
+<button name="create_excel" id="create_excel" class="btn btn-success" onclick="$('table').tblToExcel();">Export to Excel</button>
