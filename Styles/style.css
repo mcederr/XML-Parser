@@ -18,3 +18,13 @@ tr td {
 thead{
 	vertical-align: middle;
 }
+
+.pointer{
+	cursor: pointer;
+}
+
+.error {
+
+	border-color: red;
+	border-width: 2px;
+}

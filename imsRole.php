@@ -20,8 +20,8 @@
 	$mismAdminAttributeExpression = false;
 
 	// Levantamos el XML
-	$objDOM = new DOMDocument();
-	$objDOM->load("YourXMLName.xml");
+	//$objDOM = new DOMDocument();
+	//$objDOM->load("Claro.xml");
 
 	// Atributo Buscado
 	$attribute = $_GET['attribute'];

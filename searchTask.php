@@ -1,25 +1,13 @@
 <?php
-
-// POSIBILIDAD DE MEJORA: cuando se ingresa una parte del nombre de la tarea por ejemplo "Alta", te liste todas las tareas que contengan "Alta" en el nombre o en el tag para que luego el usuario seleccione la tarea que quiere buscar
 	
 	require('header.php');
-
-	class ManagedObject{
-		public $managedObjectType;
-		public $friendlyName;
-		public $category;
-		public $attributeTypeValue;
-		public $type;
-		public $step;
-		public $event;
-		public $status;
-		public $priority;
-	}
-
+	require_once('Classes/ManagedObject.php');
+	require_once('Classes/Task.php');
+	require_once('Functions/methods.php');
 
 	// Levantamos el XML
-	$objDOM = new DOMDocument();
-	$objDOM->load("YourXMLName.xml");
+	//$objDOM = new DOMDocument();
+	//$objDOM->load("Claro.xml");
 	
 	// Flag que indicara cuando se cambio de ImsTask, como es el primer elemento siempre tiene
 	// que cambiar de fila para agregar el nuevo elemento
@@ -28,10 +16,14 @@
 	// Flag que indicara si la tarea buscada existe en mi universo de tareas
 	$existeTask = false;
 
+	// Array que contendra la solucion del problema
 	$auxArray = array();
 
+	// Array que en caso de no encontrar la tarea sugerira posibles soluciones
+	$suggestArray = array();
+
 	// Atributo Buscado
-	$task = $_GET['task'];
+	$task = $_POST['task'];
 
 	// Obtengo todas las tareas
 	$imsTask = $objDOM->getElementsByTagName("ImsTask");
@@ -49,77 +41,68 @@
   			// Indico que la tarea buscada existe
    			$existeTask = true;
 
+   		}else{
+
+   			if (stripos($searchImsTask->getAttribute('name'), $task) !== false || stripos($searchImsTask->getAttribute('tag'), $task) !== false){
+
+   				$suggestion = new Task();
+   				$suggestion->name = $searchImsTask->getAttribute('name');
+   				$suggestion->tag = $searchImsTask->getAttribute('tag');
+   				array_push($suggestArray, $suggestion);
+   			}
    		}
    	}
 
-   	// Verifico si existe la tarea buscada dentro de mi universo de tareas
-   	// COMO BUSCAR EL ARRAY INDEX EN DONDE SE ENCUENTRA LO QUE ESTOY BUSCANDO
-	/*foreach ($imsTask as $searchImsTask => $value){
-
-		// Si al buscar el Name o Tag de la tarea encuentro la tarea buscada
-		if ($value->getAttribute('name') == $task || $value->getAttribute('tag') == $task){
-
-			echo "Key: ".$searchImsTask."<br>";
-
-			if ($value->getAttribute('name') == $task){
-				echo "NameValue: ".$value->getAttribute('name')."<br>";
-			}else{
-				echo "TagValue: ".$value->getAttribute('tag')."<br>";
-			}
-
-			// Me guardo esos datos
-			$taskName = $value->getAttribute('name');
-			$taskTag = $value->getAttribute('tag');
-
-  			// Indico que la tarea buscada existe
-   			$existeTask = true;
-
-   		}
-   	}*/
-
 ?>
 
-	<?php 
-		// Consulto si existe la tarea buscada dentro de mi universo de tareas
-		if($existeTask){ 
-	?>
-			<dl class="row">
-			  <dt class="col-sm-3">Task Name:</dt>
-			  <dd class="col-sm-9"><?php echo $taskName; ?></dd>
-			  <dt class="col-sm-3">Task Tag:</dt>
-			  <dd class="col-sm-9"><?php echo $taskTag; ?></dd>
-			</dl>
-	<?php
-		}else{
-	?>
-			<dl class="row">
-			  <dt class="col-sm-3">Task Name:</dt>
-			  <dd class="col-sm-9"><?php echo $task; ?></dd>
-			  <dt class="col-sm-3">Task Tag:</dt>
-			  <dd class="col-sm-9"></dd>
-			</dl>
-	<?php	
-		}
-	?>
-	<table class="table table-hover table-dark table-bordered" id="task_table">
-	  <thead>
-	    <tr>
-	      <th>Managed Object Type</th>
-	      <th>Managed Object Friendly Name</th>
-	      <th>Category</th>
-	      <th>Attribute Type Value</th>
-	      <th>Type</th>
-	      <th>Step</th>
-	      <th>Priority</th>
-	      <th>Status</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    
-	    <?php
+<?php 
 
-	    	if ($existeTask) {
-	    		
+	// Consulto si existe la tarea buscada dentro de mi universo de tareas
+	if($existeTask){ 
+
+?>
+		<dl class="row">
+		<dt class="col-sm-3">Task Name:</dt>
+			<dd class="col-sm-9"><?php echo $taskName; ?></dd>
+			<dt class="col-sm-3">Task Tag:</dt>
+			<dd class="col-sm-9"><?php echo $taskTag; ?></dd>
+		</dl>
+<?php
+
+	}else{
+
+?>
+		<dl class="row">
+			<dt class="col-sm-3">Task Name:</dt>
+			<dd class="col-sm-9"><?php echo $task; ?></dd>
+			<dt class="col-sm-3">Task Tag:</dt>
+			<dd class="col-sm-9"></dd>
+		</dl>
+<?php	
+		}
+
+	if ($existeTask) {
+
+?>
+		<table class="table table-hover table-dark table-bordered" id="task_table">
+		  <thead>
+		    <tr>
+		      <th>Managed Object Type</th>
+		      <th>Managed Object Friendly Name</th>
+		      <th>Category</th>
+		      <th>Attribute Type Value</th>
+		      <th>Type</th>
+		      <th>Step</th>
+		      <th>Priority</th>
+		      <th>Status</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    
+		    <?php
+
+		    	//if ($existeTask) {
+		    		
 	    		// Obtengo todos los Managed Objects
 	    		$managedObject = $objDOM->getElementsByTagName("ManagedObject");
 
@@ -242,85 +225,108 @@
 	    		// la funcion compare()
 	    		uasort ($auxArray,"compare");
 
-	    		// Muestro el resultado por pantalla		    	
-		    	foreach ($auxArray as $resultado) {
-		    		
-	    ?>
-		    		<tr>
-		    			<td><?php echo $resultado->managedObjectType; ?></td>
-						<td><?php echo $resultado->friendlyName; ?></td>
-						<td><?php echo $resultado->category ?></td>
-						<td style="text-align: center;"><?php echo $resultado->attributeTypeValue; ?></td>
-						<td><?php echo $resultado->type; ?></td>
-						<td><?php echo $resultado->step; ?></td>
-						<td style="text-align: center;"><?php echo $resultado->priority; ?></td>
+	    		// Verifico si la tarea encontrada, tiene policies asociadas
+	    		if (sizeof($auxArray) > 0) {
+	    		
+
+		    		// Muestro el resultado por pantalla		    	
+			    	foreach ($auxArray as $resultado) {
+			    		
+		?>
+			    		<tr>
+			    			<td><?php echo $resultado->managedObjectType; ?></td>
+							<td><?php echo $resultado->friendlyName; ?></td>
+							<td><?php echo $resultado->category ?></td>
+							<td style="text-align: center;"><?php echo $resultado->attributeTypeValue; ?></td>
+							<td><?php echo $resultado->type; ?></td>
+							<td><?php echo $resultado->step; ?></td>
+							<td style="text-align: center;"><?php echo $resultado->priority; ?></td>
 		<?php
-						if ($resultado->status == 'true'){
+							if ($resultado->status == 'true'){
 		?>
-							<td class="status" style="background-color: #00e500;"></td>
+								<td class="status" style="background-color: #00e500;"></td>
 		<?php				
-						}else{
+							}else{
 		?>
-							<td class="status" style="background-color: red;"></td>
+								<td class="status" style="background-color: red;"></td>
 		<?php				
-						}
+							}
 		?>
-		    		</tr>
-	    <?php
+			    		</tr>
+		<?php
+			    	}
+
+		    	}else{
+		?>
+					<tr>
+						<td colspan="8" style="text-align: center;">Results Not Found</td>
+					</tr>
+		<?php
 		    	}
 
 		    // Si la tarea no existe en mi universo de tareas muestro una tabla vacia
-		    }else{
-		?>
-					<tr>
-						<td colspan="8" style="text-align: center;">No Result Found</td>
-					</tr>
-		<?php    	
-		    }
-	    ?>
-	  </tbody>
-	</table>
+		    //}else{
+	}else{
+
+			// Verifico si existen posibles soluciones
+			if (sizeof($suggestArray)>0) {
+			?>
+				<div class="alert alert-secondary" role="alert"><b><?php echo $task ?></b> Not Found. Here are some suggestions</div>
+				<table class="table table-hover table-dark table-bordered" id="task_table">
+				  <thead>
+				    <tr>
+				      <th>Task Name</th>
+				      <th>Task Tag</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+						<?php  
+
+							foreach ($suggestArray as $resultado) {
+						?>
+								<tr>
+									<td><?php echo $resultado->name; ?></td>
+									<td><a href="searchTask.php?task=<?php echo $resultado->tag;?>"><?php echo $resultado->tag; ?></a></td>
+								</tr>
+						<?php
+							}
+						?>
+				  </tbody>
+				</table>
+
+			<?php
+
+			// Si no existen posibles soluciones entonces muestro una tabla vacia
+			}else{
+			?>
+				<table class="table table-hover table-dark table-bordered" id="task_table">
+				  <thead>
+				    <tr>
+				      <th>Managed Object Type</th>
+				      <th>Managed Object Friendly Name</th>
+				      <th>Category</th>
+				      <th>Attribute Type Value</th>
+				      <th>Type</th>
+				      <th>Step</th>
+				      <th>Priority</th>
+				      <th>Status</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+						<tr>
+							<td colspan="8" style="text-align: center;">Results Not Found</td>
+						</tr>
+				  </tbody>
+				</table>
+			<?php    	
+			}
+			    //}
+	}
+		    ?>
+		  </tbody>
+		</table>
+
 <?php 
-require('export.php');
-require('footer.php'); ?>
-
-
-<?php 
-
-function formatXml($simpleXMLElement){
-	$xmlDocument = new DOMDocument('1.0');
-	$xmlDocument->preserveWhiteSpace = false;
-	$xmlDocument->formatOutput = true;
-	$xmlDocument->loadXML($simpleXMLElement->asXML());
-	return $xmlDocument->saveXML();
-}
-
-function compare($a, $b){
-
-	// El criterio sera el siguiente:
-	// Se ordenara por Tipo -> Step -> Prioridad
-    	
-   	// Verifico si tienen el mismo Tipo
-   	if ($a->type == $b->type) {
-       	
-       	// Si lo tienen, verifico si tienen el mismo Step
-      	if ($a->step == $b->step){
-      		
-      		// Si lo tienen, verifico quien tiene la menor prioridad
-       		return (intval($a->priority) < intval($b->priority)) ? -1 : 1;
-      
-       	}else{
-      		
-      		// Si no lo tienen, ordeno alfabeticamente
-       		return strcasecmp($a->step, $b->step);
-  	
-  		}
-   	
-   	}else{
-
-   		// Si no lo tienen, ordeno alfabeticamente
-    	return strcasecmp($a->type, $b->type);
-
-    }
-}
+	require('export.php');
+	require('footer.php'); 
 ?>

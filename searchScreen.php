@@ -3,11 +3,11 @@
 	require('header.php');
 
 	// Levantamos el XML
-	$objDOM = new DOMDocument();
-	$objDOM->load("YourXMLName.xml");
+	//$objDOM = new DOMDocument();
+	//$objDOM->load("Claro.xml");
 
 	// Atributo Buscado
-	$screen = $_GET['screen'];
+	$screen = $_POST['screen'];
 
 ?>
 	<table class="table table-hover table-dark table-bordered" id="task_table">
