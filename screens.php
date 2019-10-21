@@ -6,13 +6,14 @@
 	// que cambiar de fila para agregar el nuevo elemento
 	$finalizo = true;
 
-	// Levantamos el XML
-	//$objDOM = new DOMDocument();
-	//$objDOM->load("Claro.xml");
-
 	// Atributo Buscado
 	$attribute = $_GET['attribute'];
 	$searchAttribute = '%'.$attribute.'%';
+	$environmentName = $_GET['environment'];
+
+	$objDOM = new DOMDocument();
+	$objDOM->load($environmentName);
+
 ?>
 	<table class="table table-hover table-dark table-bordered">
 	  <thead>
@@ -26,6 +27,7 @@
 
 	    	// Obtengo todas las Pantallas
 	    	$screens = $objDOM->getElementsByTagName("Screen");
+	    	//$screens = $environmentXML->getElementsByTagName("Screen");
 	    	
 	    	foreach ($screens as $searchScreens) {
 	    	

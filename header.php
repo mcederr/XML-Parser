@@ -11,7 +11,8 @@
 	</header>
 	<br>
 	<?php
+		require_once("Functions/methods.php");
 		// Levantamos el XML
-		$objDOM = new DOMDocument();
-		$objDOM->load("Claro.xml");
+		//$objDOM = new DOMDocument();
+		//$objDOM->load("Claro.xml");
 	?>

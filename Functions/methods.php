@@ -28,4 +28,36 @@ function compare($a, $b){
 
     }
 }
+
+function saveFileUploaded ($fileUploaded){
+  
+  if (($fileUploaded['name'] != "")){
+    
+    // Where the file is going to be stored
+    $target_dir = "Files/";
+    
+    $file = $fileUploaded['name'];
+    $path = pathinfo($file);
+    $filename = $path['filename'];
+    $ext = $path['extension'];
+    $temp_name = $fileUploaded['tmp_name'];
+    $path_filename_ext = $target_dir.$filename.".".$ext;
+       
+    // Check if file already exists
+    if (file_exists($path_filename_ext)) {
+      
+      // Delete File
+      unlink($path_filename_ext);
+      
+      // And Upload The New File
+      move_uploaded_file($temp_name,$path_filename_ext);
+
+    }else{
+      
+      move_uploaded_file($temp_name,$path_filename_ext);
+      
+    }
+  }
+}
+
 ?>

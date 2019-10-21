@@ -19,13 +19,13 @@
 	// Al principio siempre se indica que no se esta analizando la misma
 	$mismAdminAttributeExpression = false;
 
-	// Levantamos el XML
-	//$objDOM = new DOMDocument();
-	//$objDOM->load("Claro.xml");
-
 	// Atributo Buscado
 	$attribute = $_GET['attribute'];
 	$searchAttribute = '%'.$attribute.'%';
+	$environmentName = $_GET['environment'];
+
+	$objDOM = new DOMDocument();
+	$objDOM->load($environmentName);
 
 ?>
 

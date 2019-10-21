@@ -3,11 +3,6 @@
 	require('header.php');
 	require_once('Classes/ManagedObject.php');
 	require_once('Classes/Task.php');
-	require_once('Functions/methods.php');
-
-	// Levantamos el XML
-	//$objDOM = new DOMDocument();
-	//$objDOM->load("Claro.xml");
 	
 	// Flag que indicara cuando se cambio de ImsTask, como es el primer elemento siempre tiene
 	// que cambiar de fila para agregar el nuevo elemento
@@ -23,7 +18,11 @@
 	$suggestArray = array();
 
 	// Atributo Buscado
-	$task = $_POST['task'];
+	$task = $_GET['task'];
+	$environmentName = $_GET['environment'];
+
+	$objDOM = new DOMDocument();
+	$objDOM->load($environmentName);
 
 	// Obtengo todas las tareas
 	$imsTask = $objDOM->getElementsByTagName("ImsTask");
@@ -43,8 +42,10 @@
 
    		}else{
 
+   			// Verifico si es una posible solucion es decir, si el nombre de la tarea o el tag contiene lo que estoy buscando
    			if (stripos($searchImsTask->getAttribute('name'), $task) !== false || stripos($searchImsTask->getAttribute('tag'), $task) !== false){
 
+   				// Si lo es me lo guardo como posible solucion a mi problema
    				$suggestion = new Task();
    				$suggestion->name = $searchImsTask->getAttribute('name');
    				$suggestion->tag = $searchImsTask->getAttribute('tag');
@@ -286,7 +287,7 @@
 						?>
 								<tr>
 									<td><?php echo $resultado->name; ?></td>
-									<td><a href="searchTask.php?task=<?php echo $resultado->tag;?>"><?php echo $resultado->tag; ?></a></td>
+									<td><a href="searchTask.php?task=<?php echo $resultado->tag;?>&environment=<?php echo $environmentName; ?>"><?php echo $resultado->tag; ?></a></td>
 								</tr>
 						<?php
 							}
