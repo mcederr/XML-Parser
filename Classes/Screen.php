@@ -1,7 +1,6 @@
 <?php
-	class Task{
+	class Screen{
 			public $name;
 			public $tag;
-			public $handlers = array();
 	}
 ?>

@@ -62,23 +62,27 @@
 	if($existeTask){ 
 
 ?>
-		<dl class="row">
-		<dt class="col-sm-3">Task Name:</dt>
-			<dd class="col-sm-9"><?php echo $taskName; ?></dd>
-			<dt class="col-sm-3">Task Tag:</dt>
-			<dd class="col-sm-9"><?php echo $taskTag; ?></dd>
-		</dl>
+		<div class="alert alert-primary" role="alert">
+			<dl class="row">
+			<dt class="col-sm-3">Task Name:</dt>
+				<dd class="col-sm-9"><?php echo $taskName; ?></dd>
+				<dt class="col-sm-3">Task Tag:</dt>
+				<dd class="col-sm-9"><?php echo $taskTag; ?></dd>
+			</dl>
+		</div>
 <?php
 
 	}else{
 
 ?>
-		<dl class="row">
-			<dt class="col-sm-3">Task Name:</dt>
-			<dd class="col-sm-9"><?php echo $task; ?></dd>
-			<dt class="col-sm-3">Task Tag:</dt>
-			<dd class="col-sm-9"></dd>
-		</dl>
+		<div class="alert alert-primary" role="alert">
+			<dl class="row">
+				<dt class="col-sm-3">Task Name:</dt>
+				<dd class="col-sm-9"><?php echo $task; ?></dd>
+				<dt class="col-sm-3">Task Tag:</dt>
+				<dd class="col-sm-9"></dd>
+			</dl>
+		</div>
 <?php	
 		}
 

@@ -51,10 +51,16 @@
    	}
 
 ?>
+	<div class="alert alert-primary" role="alert">
+		<dl class="row">
+			<dt class="col-sm-3">Screen:</dt>
+			<dd class="col-sm-9"><?php echo $screen; ?></dd>
+		</dl>
+	</div>
+
 	<table class="table table-hover table-dark table-bordered" id="task_table">
 	  <thead>
 	    <tr>
-	      <th>Screen: <?php echo $screen; ?></th>
 	      <th>Task Name</th>
 	      <th>Task Tag Name</th>
 	    </tr>
@@ -69,7 +75,6 @@
 		?>
 
 					<tr>
-						<td></td>
 				    	<td><?php echo $solution->name; ?></td>
 				    	<td><?php echo $solution->tag; ?></td>
 					</tr>
@@ -90,7 +95,6 @@
 		
 		?>
 						<tr>
-							<td></td>
 							<td><?php echo $solution?></td>
 							<td><a href="searchScreen.php?screen=<?php echo $solution;?>&environment=<?php echo $environmentName; ?>"><?php echo $solution; ?></a></td>
 						</tr>
@@ -100,53 +104,13 @@
 				}else{
 		?>
 					<tr>
-						<td colspan="3" style="text-align: center;">Results Not Found</td>
+						<td colspan="2" style="text-align: center;">Results Not Found</td>
 					</tr>
 		<?php
 				}
 			}
 
 		?>
-
-	    <!--<?php
-
-	    	// Obtengo todos los ImsTask
-	    	$imsTask = $objDOM->getElementsByTagName("ImsTask");
-	    	
-	    	foreach ($imsTask as $searchImsTask) {
-	    		
-	    		// Obtengo el nombre de cada ImsTask
-    			$imsTaskName = $searchImsTask->getAttribute('name');
-
-    			$imsTaskTag = $searchImsTask->getAttribute('tag');
-					
-				// Busco todas las Property de cada ImsTask
-				foreach ($searchImsTask->getElementsByTagName("Property") as $searchTaskProperty){
-
-					$imsTaskPropertyAttributeName = $searchTaskProperty->getAttribute('name');
-
-					// Verifico si la Property corresponde a la descripcion de una Pantalla
-					// y si la misma es la pantalla que estoy buscando
-
-					if ($imsTaskPropertyAttributeName == 'Screen' && $searchTaskProperty->nodeValue == $screen) {
-
-		?>-->
-						<!-- 
-							Lo muestro por pantalla 
-						-->
-				    	<!--<tr>
-				    		<td></td>
-				    		<td><?php echo $imsTaskName; ?></td>
-				    		<td><?php echo $imsTaskTag; ?></td>
-				    	</tr>-->
-		<!--<?php
-
-					}
-				}
-
-	    	}
-	    
-	    ?>-->
 
 	  </tbody>
 	</table>

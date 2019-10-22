@@ -14,7 +14,7 @@
 	  			</div>
 			</div>
 			<br>
-			<input type="submit" class="btn btn-primary" value="Submit">
+			<input type="submit" id="button" class="btn btn-primary" value="Submit">
 		</form>
 
 		<script>
@@ -40,22 +40,9 @@
 
   					// this removes the error class
 					document.getElementById("fileField").className = document.getElementById("fileField").className.replace(" error", "");
-  					
-					var file = document.getElementById("inputGroupFile").value;
-					
-					var sCurExtension = ".xml";
 
-					if (file.substr(file.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()){
+  					return true;
 
-  						return true;
-  					
-  					}else{
-
-  						// this adds the error class
-  						document.getElementById("fileField").className = document.getElementById("fileField").className + " error";
-  						
-  						return false;
-  					}
   				}
 			}
 			
@@ -74,6 +61,8 @@
 			            	// this removes the error class
 							document.getElementById("fileField").className = document.getElementById("fileField").className.replace(" error", "");
 
+							document.getElementById("button").disabled = false;
+
 							return true;
 						
 						}else{
@@ -83,6 +72,8 @@
 			            	
 			            	// this adds the error class
   							document.getElementById("fileField").className = document.getElementById("fileField").className + " error";
+
+  							document.getElementById("button").disabled = true;
 			            
 			                return false;
 						}

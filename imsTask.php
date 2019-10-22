@@ -15,11 +15,18 @@
 	$objDOM->load($environmentName);
 
 ?>
+	<div class="alert alert-primary" role="alert">
+		<dl class="row">
+			<dt class="col-sm-3">Attribute:</dt>
+			<dd class="col-sm-9"><?php echo $attribute; ?></dd>
+		</dl>
+	</div>
+	
 	<table class="table table-hover table-dark table-bordered" id="task_table">
 	  <thead>
 	    <tr>
-	      <th>Attribute: <?php echo $searchAttribute; ?></th>
 	      <th>Task Name</th>
+	      <th>Task Tag</th>
 	      <th>Business Logic Task Handler Name</th>
 	    </tr>
 	  </thead>
@@ -34,6 +41,7 @@
 	    		
 	    		// Obtengo el nombre de cada ImsTask
     			$imsTaskName = $searchImsTask->getAttribute('name');
+    			$imsTaskTag = $searchImsTask->getAttribute('tag');
 					
 				// Busco todas las Property de cada ImsTask
 				foreach ($searchImsTask->getElementsByTagName("Property") as $searchTaskProperty){
@@ -47,8 +55,8 @@
 							Si estoy analizando una nueva, debo agregarla en la tabla junto a la Tarea 
 						-->
 				    	<tr>
-				    		<td></td>
 				    		<td><?php echo $imsTaskName; ?></td>
+				    		<td><?php echo $imsTaskTag; ?></td>
 				    		<td></td>
 				    	</tr>
 		<?php
@@ -68,8 +76,8 @@
 			    	//if (strpos($searchBusinessLogicTaskHandler->nodeValue, '%EMP_TYPE%') && $finalizo){
 ?>
 						<tr>
-							<td></td>
 				    		<td><?php echo $imsTaskName; ?></td>
+				    		<td><?php echo $imsTaskTag; ?></td>
 				    		<td><?php echo $searchBusinessLogicTaskHandler->getAttribute('name'); ?></td>
 				    	</tr>
 <?php

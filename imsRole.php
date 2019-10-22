@@ -28,7 +28,13 @@
 	$objDOM->load($environmentName);
 
 ?>
-
+	<div class="alert alert-primary" role="alert">
+		<dl class="row">
+			<dt class="col-sm-3">Attribute:</dt>
+			<dd class="col-sm-9"><?php echo $attribute; ?></dd>
+		</dl>
+	</div>
+	
 	<table class="table table-hover table-dark table-bordered">
 	  <thead>
 	    <tr>

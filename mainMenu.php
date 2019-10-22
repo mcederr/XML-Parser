@@ -87,4 +87,23 @@
 		  </div>
 		  <input type="hidden" name="environment" value="<?php echo $environmentXML; ?>">
 		</form>
+		<br>
+		<br>
+		<h2><u>Search JAVA Class</u></h2>
+		<br>
+		<form action="searchJavaClass.php" method="GET">
+			<div class="form-group row">
+		    <label class="col-sm-2 col-form-label">Class Name:</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="className" required="true">
+		    </div>
+		  </div>
+		  <br>
+		  <div class="form-group row">
+		    <div class="col-sm-10">
+		      <button type="submit" class="btn btn-primary">Submit</button>
+		    </div>
+		  </div>
+		  <input type="hidden" name="environment" value="<?php echo $environmentXML; ?>">
+		</form>
 <?php require_once("footer.php"); ?>
