@@ -3,13 +3,16 @@
 	require('header.php');
 	require_once('Classes/ManagedObject.php');
 	require_once('Classes/Task.php');
-	
+
 	// Flag que indicara cuando se cambio de ImsTask, como es el primer elemento siempre tiene
 	// que cambiar de fila para agregar el nuevo elemento
 	$finalizo = true;
 
 	// Flag que indicara si la tarea buscada existe en mi universo de tareas
 	$existeTask = false;
+
+	// Flag que indica si la tarea forma parte de las entryRules
+	$isSolution = false;
 
 	// Array que contendra la solucion del problema
 	$auxArray = array();
@@ -113,6 +116,8 @@
 
 	    		foreach ($managedObject as $searchManagedObject){
 
+	    			$isSolution = false;
+
 	    			$whenToRun = new ManagedObject();
 
 	    			// Busco el tipo y el nombre de cada Managed Object
@@ -146,6 +151,25 @@
 
 							//Si lo es, obtengo el valor del atributo
 							$whenToRun->priority = $searchManagedObjectAttribute->nodeValue;
+
+						}
+
+						// Verifico si el nombre de ese atributo corresponde a las Entry Rules una Policy o Email
+						if ($managedObjectAttributeName == 'entryRules'){
+
+							//$text = "<Attribute name=".'"value">'.$task."</Attribute>";
+							//$textTranslate = htmlspecialchars($text);
+							
+							$conditions = explode("<Condition>", $searchManagedObjectAttribute->nodeValue);
+							foreach ($conditions as $verifyConditions) {
+
+								if(stripos($verifyConditions,$task) !== false && stripos($verifyConditions,"NOT_EQUALS") !== true){
+									
+									$isSolution = true;
+
+								}
+								
+							}
 
 						}
 
@@ -220,8 +244,18 @@
 								array_push($auxArray, $whenToRun);
 
 							}
+
 						}
+
 					}
+
+					if ($isSolution){
+									
+						array_push($auxArray, $whenToRun);
+						$isSolution = false;
+
+					}
+
 	    		}
 
 	    		// Ordeno el resultado obtenido antes de mostrar por pantalla

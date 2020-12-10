@@ -34,7 +34,7 @@
 				if ($finish == false){
 
 					/*
-					
+
 					echo "-------------------------------- <br>";
 					echo "Tarea: ".$searchTask->getAttribute('name');
 					echo "<br>";
@@ -53,7 +53,6 @@
 				echo "<br>";
 
 				*/
-				
 
 				$taskEventWorkFlows->taskName = $searchTask->getAttribute('name');
 				$taskEventWorkFlows->event = $aux[$i]->getAttribute('name');
@@ -69,9 +68,11 @@
 				if ($finish == false){
 					
 					/*
+
 					echo "-------------------------------- <br>";
 					echo "Tarea: ".$searchTask->getAttribute('name');
 					echo "<br>";
+					
 					*/
 					
 					$finish = true;
@@ -80,10 +81,14 @@
 				
 				
 
-				if (is_numeric($aux[$i+1]->nodeValue) == false){
+				if ($i+1 < sizeof($aux) && is_numeric($aux[$i+1]->nodeValue) == false){
 
-					//echo "WorkFlow: ".$aux[$i+1]->nodeValue;
-					//echo "<br>";
+					/*
+
+					echo "WorkFlow: ".$aux[$i+1]->nodeValue;
+					echo "<br>";
+
+					*/
 
 					$taskEventWorkFlows->taskName = $searchTask->getAttribute('name');
 					$taskEventWorkFlows->workFlow = $aux[$i+1]->nodeValue;
@@ -91,8 +96,10 @@
 				}else{
 					
 					/*
+
 					echo "WorkFlow: ".$aux[$i]->nodeValue;
 					echo "<br>";
+					
 					*/
 
 					$taskEventWorkFlows->taskName = $searchTask->getAttribute('name');
@@ -100,20 +107,39 @@
 
 				}
 
-				if ($i>0 && is_numeric($aux[$i-1]->nodeValue) == true){
+				if ($i-1 > 0 && is_numeric($aux[$i-1]->nodeValue) == true){
 
-				/*	
+					/*
 
 					echo "EventName: ".str_replace("Event.selectedWorkFlowType","",$aux[$i]->getAttribute('name'));
 					echo "<br>";
 					echo "EventWorkFlow: ".$aux[$i]->nodeValue;
 					echo "<br>";
-				*/	
 					
+					*/
 
 					$taskEventWorkFlows->taskName = $searchTask->getAttribute('name');
 					$taskEventWorkFlows->event = str_replace("Event.selectedWorkFlowType","",$aux[$i]->getAttribute('name'));
 					$taskEventWorkFlows->workFlow = $aux[$i]->nodeValue;
+
+				}else{
+
+					if ($i-1 < 0){
+
+						/*
+
+						echo "Negativo: ".str_replace("Event.selectedWorkFlowType","",$aux[$i]->getAttribute('name'));
+						echo "<br>";
+						echo "Valor: ".$aux[$i]->nodeValue;
+						echo "<br>";
+
+						*/
+	
+						$taskEventWorkFlows->taskName = $searchTask->getAttribute('name');
+						$taskEventWorkFlows->event = str_replace("Event.selectedWorkFlowType","",$aux[$i]->getAttribute('name'));
+						$taskEventWorkFlows->workFlow = $aux[$i]->nodeValue;
+
+					}
 
 				}
 
@@ -190,7 +216,7 @@
 		</dl>
 	</div>
 	
-	<table class="table table-hover table-dark table-bordered">
+	<table class="table-responsive table-hover table-dark table-bordered">
 		<thead>
 
 		  	<tr>
