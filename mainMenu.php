@@ -173,6 +173,29 @@
 	    	</div>
 
 	    	<div class="col">
+	    		<h2><u>Search Policies Express for Specific Event</u></h2>
+				<br>
+				<form action="searchEvent.php" method="GET">
+					<div class="form-group row">
+				    	<label class="col-sm-2 col-form-label">Event Name:</label>
+				    	<div class="col-sm-10">
+				      		<input type="text" class="form-control" name="event" required="true">
+				    	</div>
+				  	</div>
+				 	<br>
+				  	<div class="form-group row">
+				  		<div class="col-sm-10">
+				      		<button type="submit" class="btn btn-primary">Submit</button>
+				    	</div>
+				  	</div>
+				  	<input type="hidden" name="environment" value="<?php echo $environmentXML; ?>">
+				</form>
+	    	</div>
+	    </div>
+
+	    <div class="row">
+
+	    	<div class="col">
 	    		<h2><u>List Select Box</u></h2>
 				<br>
 				<div class="form-group row">
@@ -185,9 +208,7 @@
 				    </div>
 				</div>
 	    	</div>
-	    </div>
 
-	    <div class="row">
 	    	<div class="col">
 	    		<h2><u>List Tables</u></h2>
 				<br>
@@ -202,6 +223,10 @@
 				</div>
 	    	</div>
 
+	    </div>
+
+	    <div class="row">
+
 	    	<div class="col">
 	    		<h2><u>List Stored Procedures</u></h2>
 				<br>
@@ -215,9 +240,7 @@
 				    </div>
 				</div>
 	    	</div>
-	    </div>
 
-	    <div class="row">
 	    	<div class="col">
 	    		<h2><u>List Select Box</u></h2>
 				<br>
@@ -231,6 +254,11 @@
 				    </div>
 				</div>
 	    	</div>
+
+	    </div>
+
+	    <div class="row">
+	    	
 	    	<div class="col">
 	    		<h2><u>List Policies Xpress</u></h2>
 				<br>
@@ -244,9 +272,7 @@
 				    </div>
 				</div>
 	    	</div>
-	    </div>
 
-	    <div class="row">
 	    	<div class="col">
 	    		<h2><u>List Screens</u></h2>
 				<br>
@@ -260,6 +286,11 @@
 				    </div>
 				</div>
 	    	</div>
+
+	    </div>
+
+	    <div class="row">
+	    	
 	    	<div class="col">
 	    		<h2><u>List Tasks</u></h2>
 				<br>
@@ -273,9 +304,7 @@
 				    </div>
 				</div>
 	    	</div>
-	    </div>
 
-	    <div class="row">
 	    	<div class="col">
 	    		<h2><u>List Roles</u></h2>
 				<br>
@@ -289,6 +318,11 @@
 				    </div>
 				</div>
 	    	</div>
+
+	    </div>
+
+	    <div class="row">
+	    	
 	    	<div class="col">
 	    		<h2><u>List Emails Notifications</u></h2>
 				<br>
@@ -302,9 +336,7 @@
 				    </div>
 				</div>
 	    	</div>
-	    </div>
 
-	    <div class="row">
 	    	<div class="col">
 	    		<h2><u>List JAVA Class</u></h2>
 				<br>
@@ -318,6 +350,11 @@
 				    </div>
 				</div>
 	    	</div>
+
+	    </div>
+
+	    <div class="row">
+	    	
 	    	<div class="col">
 	    		<h2><u>List Directory Attributes</u></h2>
 				<br>
@@ -331,11 +368,7 @@
 				    </div>
 				</div>
 	    	</div>
-	    </div>
 
-	    <br>
-
-	    <div class="row">
 	    	<div class="col">
 	    		<h2><u>List Tasks With Workflow</u></h2>
 				<br>
@@ -349,6 +382,7 @@
 				    </div>
 				</div>
 	    	</div>
+
 	    </div>
 		
 
