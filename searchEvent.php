@@ -24,7 +24,9 @@
 
 		// Verifico si el Managed Object es una policy Express
 		if ($searchPolicy->getAttribute('type') == 'POLICY XPRESS EXPORT'){
-
+			
+			$policy = new PolicyExpress();
+			
 			// Si lo es, busco todos los Attributes de esa policy
 			foreach ($searchPolicy->getElementsByTagName("Attribute") as $searchPolicyAttributes){
 
@@ -33,12 +35,17 @@
 
 				// Obtengo el valor de ese attribute
 				$policyAttributeValue = $searchPolicyAttributes->nodeValue;
-
-				// Verifico si el tipo de policy es de tipo "EVENT"
+				
+				if ($policyAttributeName == 'enabled'){
+					
+					$policy->status = $policyAttributeValue;
+				
+				}
+				
+				// Verifico si el tipo de policy es de tipo "EVENT" o "TASK"
 				if ($policyAttributeName == 'type' && $policyAttributeValue == 'EVENT' || $policyAttributeValue == 'TASK'){
 
 					// Guardo el valor
-					$policy = new PolicyExpress();
 					$policy->name = $searchPolicy->getAttribute('friendlyName');
 					$policy->type = $policyAttributeValue;
 					
@@ -94,6 +101,7 @@
 	    <tr>
 	      <th>Policy Name</th>
 	      <th>Policy Type</th>
+		  <th>Status</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -108,6 +116,17 @@
 					<tr>
 				    	<td><?php echo $solution->name; ?></td>
 				    	<td><?php echo $solution->type; ?></td>
+						<?php
+							if ($solution->status == 'true'){
+						?>
+								<td class="status" style="background-color: #00e500;"></td>
+						<?php				
+							}else{
+						?>
+								<td class="status" style="background-color: red;"></td>
+						<?php				
+							}
+						?>
 					</tr>
 
 		<?php
@@ -116,7 +135,7 @@
 			}else{
 		?>
 					<tr>
-						<td colspan="2" style="text-align: center;">Results Not Found</td>
+						<td colspan="3" style="text-align: center;">Results Not Found</td>
 					</tr>
 		<?php
 
